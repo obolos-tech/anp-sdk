@@ -1,0 +1,46 @@
+{
+  "name": "@obolos_tech/anp-sdk",
+  "version": "0.1.0",
+  "description": "Agent Negotiation Protocol (ANP) — Trustless, gas-free negotiation via EIP-712 signed messages",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "contracts",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "anp",
+    "negotiation",
+    "eip-712",
+    "agent",
+    "protocol",
+    "ethereum",
+    "content-addressed",
+    "trustless"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "viem": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.9.3",
+    "viem": "^2.45.2",
+    "vitest": "^3.2.4"
+  }
+}
