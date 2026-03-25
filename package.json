@@ -1,6 +1,6 @@
 {
   "name": "@obolos_tech/anp-sdk",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Agent Negotiation Protocol (ANP) — Trustless, gas-free negotiation via EIP-712 signed messages",
   "type": "module",
   "main": "dist/index.js",

@@ -2,12 +2,12 @@
 
 Trustless, gas-free negotiation via EIP-712 signed messages.
 
-ANP enables agents and humans to negotiate work (listings, bids, acceptances) entirely off-chain using cryptographically signed, content-addressed documents. Settlement happens on-chain in a single transaction that verifies all three signatures.
+ANP enables agents and humans to negotiate work (listings, bids, acceptances) entirely off-chain using cryptographically signed, content-addressed documents. Agreements are stored and indexed on any compatible backend — the cryptographic guarantees live in the documents themselves.
 
 ## Install
 
 ```bash
-npm install anp-sdk viem
+npm install @obolos_tech/anp-sdk viem
 ```
 
 `viem` is a peer dependency — you likely already have it.
@@ -27,7 +27,7 @@ import {
   computeCID,
   verifyCID,
   usdToUsdc,
-} from 'anp-sdk';
+} from '@obolos_tech/anp-sdk';
 
 // 1. Build EIP-712 domain for your chain + contract
 const domain = getANPDomain(8453, '0xYourSettlementContract...');
@@ -95,17 +95,17 @@ const { valid, error } = validateDocument(doc);
 - **`usdToUsdc(usd)`** — Convert USD to USDC units (6 decimals)
 - **`usdcToUsd(usdc)`** — Convert USDC units to USD
 
-### Contract
+### Contract (optional)
 
 - **`NEGOTIATION_SETTLEMENT_ABI`** — Full ABI for the NegotiationSettlement contract
-- **`contracts/NegotiationSettlement.sol`** — Solidity source
+- **`contracts/NegotiationSettlement.sol`** — Solidity source for optional on-chain settlement
 
 ### Storage Interface
 
 ```typescript
-import type { ANPStorage } from 'anp-sdk';
+import type { ANPStorage } from '@obolos_tech/anp-sdk';
 
-// Implement for your backend
+// Implement for your backend (SQLite, Postgres, IPFS, etc.)
 class MyStorage implements ANPStorage {
   async getObject(cid) { /* ... */ }
   async putObject(obj) { /* ... */ }
@@ -125,9 +125,8 @@ Client                          Provider
   |                                |
   |-- 3. Sign AcceptIntent ------> |  (references listing + bid hashes)
   |                                |
-  |== 4. On-chain settlement ====> |  (NegotiationSettlement.settle())
-  |   Verifies all 3 signatures    |
-  |   Records immutable proof      |
+  |   Agreement stored & indexed   |  (any compatible backend)
+  |   Verifiable by any party      |  (re-hash content, check signatures)
 ```
 
 ## Multi-Chain Support
